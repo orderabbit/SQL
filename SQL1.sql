@@ -1,6 +1,9 @@
 DROP DATABASE IF EXISTS board;
+
 CREATE DATABASE board;
+
 SHOW DATABASES;
+
 USE board;
 
 # 게시물 테이블(`article`)을 만듭니다. 게시물은 제목과 내용으로 이루어져 있습니다.
@@ -71,3 +74,25 @@ INSERT INTO article SET title = "제목2", content = "내용2";
 
 # 제목이 제목1인 것만 삭제
 DELETE FROM article WHERE title = "제목1";
+
+
+#======================================================================
+
+
+#테이블의 모든 데이터 지우기
+DELETE FROM article;
+
+#제목1, 내용1 데이터 추가
+INSERT INTO article SET title = "제목1", content = "내용1";
+
+#제목2, 내용2 데이터 추가
+INSERT INTO article SET title = "제목2", content = "내용2";
+
+#데이터 조회
+SELECT * FROM article;
+
+#제목 데이터 aaa로 수정(모두 수정됨)
+UPDATE article SET title = "aaa";
+
+#content가 내용2인 것만 조회
+SELECT * FROM article WHERE content = "내용2";
