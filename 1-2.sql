@@ -294,3 +294,37 @@ ON t_order.userNo = t_user.id
 INNER JOIN t_product
 ON t_order.productNo = t_product.id
 WHERE userName = "소지섭";
+
+#================================================
+
+INSERT INTO t_user
+SET userId = 'user7',
+userPw = 'pass7',
+userName = '홍길동',
+addr = '경기';
+
+INSERT INTO t_product
+SET pname = '가디건',
+price = 39000;
+
+SELECT * 
+FROM t_order;
+
+SELECT *
+FROM t_user;
+
+SELECT *
+FROM t_product;
+
+## 회원별로 주문 건수 좀 알아봐 줘
+## INNER JOIN은 JOIN 대상이 없는 데이터는 나오지 않는다.
+## JOIN 대상이 없어 제외된 행들은 OUTER라고 부르기로 하고 왼쪽 OUTER를 LEFT OUTER, 오른쪽 OUTER를 RIGHT OUTER라고 부르기로 한다.
+## OUTER를 결과에 포함시키려면 OUTER JOIN을 사용해야 한다.
+## outer는 짝이 없기 때문에 짝 정보가 들어와야 할 곳이 null로 채워진다.
+## null은 count함수에서 count되지 않는다.
+
+SELECT userId, userName, COUNT(userNo) AS "주문건수"
+FROM t_order o
+RIGHT OUTER JOIN t_user u
+ON o.userNo = u.id
+GROUP BY userNo;
