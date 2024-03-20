@@ -148,11 +148,9 @@ ON E.DEPTNO = D.DEPTNO
 GROUP BY SAL;
 
 #20. 부서별 전체 사원수와 커미션을 받는 사원들의 수를 구하는 쿼리 (hint : group by, count())
-SELECT DNAME, COMM, COUNT(EMPNO)
-FROM EMP E
-INNER JOIN DEPT D
-ON E.DEPTNO = D.DEPTNO
-GROUP BY DNAME;
+SELECT DEPTNO, COUNT(EMPNO) AS "사원수", COUNT(IF(COMM = 0, NULL, COMM)) AS "커미션 인원"
+FROM EMP
+GROUP BY DEPTNO;
 
 #21. 부서별 최대 급여와 최소 급여를 구하는 쿼리 (hint : group by, min(), max())
 SELECT DNAME, MAX(SAL), MIN(SAL)
@@ -162,7 +160,7 @@ ON E.DEPTNO = D.DEPTNO
 GROUP BY DNAME;
 
 #22. 부서별로 급여 평균 (단, 부서별 급여 평균이 2000 이상만) (hint : group by, having)
-SELECT DNAME, AVG(SAL)
+SELECT DNAME, AVG(SAL) AS "급여평균"
 FROM EMP E
 INNER JOIN DEPT D
 ON E.DEPTNO = D.DEPTNO
@@ -170,13 +168,25 @@ GROUP BY DNAME
 HAVING AVG(SAL) >= 2000;
 
 #23. 월급여가 1000 이상인 사원만을 대상으로 부서별로 월급여 평균을 구하라. 단, 평균값이 2000 이상인 레코드만 구하라. (hint : group by, having)
-SELECT DNAME, AVG(SAL)
+SELECT DNAME, AVG(SAL) AS "월급여 평균"
 FROM EMP E
 INNER JOIN DEPT D
 ON E.DEPTNO = D.DEPTNO
 WHERE SAL >= 1000
-GROUP BY DNAME
+GROUP BY DNAMES
 HAVING AVG(SAL) >= 2000;
+
+#==========================================
+
+SELECT *
+FROM
+	(
+	SELECT DEPTNO, AVG(SAL) AS "월급여평균"
+	FROM EMP 
+	WHERE SAL >= 1000
+	GROUP BY DEPTNO
+	) AS tmp
+WHERE "월급여평균" >= 2000;
 
 #24. 사원명과 부서명을 조회하시오. (hint : inner join)
 SELECT ENAME, DNAME
